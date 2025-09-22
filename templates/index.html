@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9-Anadolu A - Student Directory</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon">
+    <style>
+        /* Reset and base styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; }
+        
+        /* Layout utilities */
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .justify-around { justify-content: space-around; }
+        .flex-1 { flex: 1; }
+        .gap-1 { gap: 0.25rem; }
+        .gap-4 { gap: 1rem; }
+        
+        /* Positioning */
+        .relative { position: relative; }
+        .absolute { position: absolute; }
+        .sticky { position: sticky; }
+        .top-0 { top: 0; }
+        .top-half { top: 50%; transform: translateY(-50%); }
+        .left-3 { left: 0.75rem; }
+        .bottom-0 { bottom: 0; }
+        .z-10 { z-index: 10; }
+        
+        /* Sizing */
+        .w-full { width: 100%; }
+        .w-10 { width: 2.5rem; }
+        .h-10 { height: 2.5rem; }
+        .h-auto { height: auto; }
+        .min-h-screen { min-height: 100vh; }
+        
+        /* Padding and margin */
+        .p-4 { padding: 1rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+        .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+        .pl-10 { padding-left: 2.5rem; }
+        .pr-4 { padding-right: 1rem; }
+        
+        /* Colors */
+        .bg-white { background-color: white; }
+        .bg-gray-50 { background-color: #f9fafb; }
+        .bg-gray-100 { background-color: #f3f4f6; }
+        .text-gray-400 { color: #9ca3af; }
+        .text-gray-500 { color: #6b7280; }
+        .text-gray-700 { color: #374151; }
+        .text-gray-800 { color: #1f2937; }
+        .text-gray-900 { color: #111827; }
+        
+        /* Primary colors */
+        .bg-primary-50 { background-color: #eff6ff; }
+        .bg-primary-100 { background-color: #dbeafe; }
+        .bg-primary-300 { background-color: #93c5fd; }
+        .text-primary-600 { color: #2563eb; }
+        
+        /* Other colors */
+        .bg-emerald-100 { background-color: #d1fae5; }
+        .text-emerald-600 { color: #059669; }
+        .bg-rose-100 { background-color: #ffe4e6; }
+        .text-rose-600 { color: #e11d48; }
+        .bg-fuchsia-100 { background-color: #fae8ff; }
+        .text-fuchsia-600 { color: #c026d3; }
+        .bg-sky-100 { background-color: #e0f2fe; }
+        .text-sky-600 { color: #0284c7; }
+        .bg-indigo-100 { background-color: #e0e7ff; }
+        .text-indigo-600 { color: #4f46e5; }
+        .bg-purple-100 { background-color: #f3e8ff; }
+        .text-purple-600 { color: #9333ea; }
+        .bg-pink-100 { background-color: #fce7f3; }
+        .text-pink-600 { color: #db2777; }
+        .bg-amber-100 { background-color: #fef3c7; }
+        .text-amber-600 { color: #d97706; }
+        .bg-lime-100 { background-color: #ecfccb; }
+        .text-lime-600 { color: #65a30d; }
+        .bg-teal-100 { background-color: #ccfbf1; }
+        .text-teal-600 { color: #0d9488; }
+        .bg-cyan-100 { background-color: #cffafe; }
+        .text-cyan-600 { color: #0891b2; }
+        .bg-orange-100 { background-color: #fed7aa; }
+        .text-orange-600 { color: #ea580c; }
+        .bg-violet-100 { background-color: #ede9fe; }
+        .text-violet-600 { color: #7c3aed; }
+        .bg-slate-100 { background-color: #f1f5f9; }
+        .text-slate-600 { color: #475569; }
+        .bg-red-100 { background-color: #fee2e2; }
+        .text-red-600 { color: #dc2626; }
+        .bg-yellow-100 { background-color: #fef3c7; }
+        .text-yellow-600 { color: #d97706; }
+        .bg-green-100 { background-color: #dcfce7; }
+        .text-green-600 { color: #16a34a; }
+        .bg-blue-100 { background-color: #dbeafe; }
+        .text-blue-600 { color: #2563eb; }
+        
+        /* Borders */
+        .border { border: 1px solid #e5e7eb; }
+        .border-t { border-top: 1px solid #e5e7eb; }
+        .border-b { border-bottom: 1px solid #e5e7eb; }
+        .border-gray-100 { border-color: #f3f4f6; }
+        .border-gray-200 { border-color: #e5e7eb; }
+        
+        /* Border radius */
+        .rounded-full { border-radius: 9999px; }
+        
+        /* Typography */
+        .text-xs { font-size: 0.75rem; }
+        .text-sm { font-size: 0.875rem; }
+        .text-base { font-size: 1rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .font-medium { font-weight: 500; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+        .uppercase { text-transform: uppercase; }
+        .tracking-wider { letter-spacing: 0.05em; }
+        .text-center { text-align: center; }
+        
+        /* Interactive */
+        .cursor-pointer { cursor: pointer; }
+        .transition-colors { transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out; }
+        
+        /* Hover states */
+        .hover-bg-gray-50:hover { background-color: #f9fafb; }
+        .hover-bg-gray-100:hover { background-color: #f3f4f6; }
+        .hover-bg-primary-50:hover { background-color: #eff6ff; }
+        .hover-text-primary-600:hover { color: #2563eb; }
+        
+        /* Focus states */
+        .focus-ring:focus { outline: 2px solid #93c5fd; outline-offset: 2px; }
+        .focus-border-primary:focus { border-color: #93c5fd; }
+        
+        /* Overflow */
+        .overflow-y-auto { overflow-y: auto; }
+        
+        /* Material icons replacement */
+        .icon { 
+            display: inline-block; 
+            font-size: 1.5rem; 
+            line-height: 1;
+        }
+        .icon-back::before { content: '←'; }
+        .icon-search::before { content: '🔍'; }
+        .icon-chevron::before { content: '›'; }
+        .icon-group::before { content: '👥'; }
+        .icon-gallery::before { content: '🖼️'; }
+        .icon-notifications::before { content: '🔔'; }
+        .icon-person::before { content: '👤'; }
+        
+        /* Layout specific */
+        .student-list { top: 145px; }
+        .search-bar { top: 73px; }
+        
+        /* Link styling */
+        a { text-decoration: none; color: inherit; }
+        
+        /* Custom spacing */
+        .student-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            transition: background-color 0.15s ease-in-out;
+        }
+        .student-item:hover {
+            background-color: #f9fafb;
+        }
+        
+        .letter-header {
+            padding: 0.5rem 1rem;
+            background-color: #f9fafb;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.125rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="relative flex h-auto min-h-screen w-full flex-col justify-between">
+        <div class="flex flex-col">
+            <!-- Header -->
+            <header class="flex items-center justify-between p-4 bg-white border-b border-gray-100 sticky top-0 z-10">
+                <button class="flex items-center justify-center w-10 h-10 rounded-full text-gray-700 hover-bg-gray-100">
+                    <span class="icon icon-back"></span>
+                </button>
+                <h1 class="text-xl font-bold text-gray-900">9-Anadolu A</h1>
+                <div class="w-10"></div>
+            </header>
+
+            <!-- Search Bar -->
+            <div class="p-4 bg-white sticky search-bar z-10 border-b border-gray-100">
+                <div class="relative">
+                    <span class="icon icon-search absolute left-3 top-half text-gray-400"></span>
+                    <input 
+                        id="searchInput"
+                        class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-full bg-gray-50 focus-ring focus-border-primary text-base" 
+                        placeholder="Search students" 
+                        type="text">
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto">
+                <div class="flex flex-col" id="studentList">
+                    {% for letter, students in grouped_students.items() %}
+                        <div class="letter-header">
+                            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider">{{ letter }}</p>
+                        </div>
+                        {% for student in students %}
+                            <a class="student-item {% if not loop.first %}border-t border-gray-100{% endif %}" 
+                               href="/students/{{ student }}">
+                                <div class="avatar bg-{{ get_avatar_color(letter) }}-100 text-{{ get_avatar_color(letter) }}-600">
+                                    {{ letter }}
+                                </div>
+                                <p class="text-gray-800 text-base font-medium flex-1">{{ student }}</p>
+                                <span class="icon icon-chevron text-gray-400"></span>
+                            </a>
+                        {% endfor %}
+                    {% endfor %}
+                    <div class="px-4 py-20 text-center text-gray-400" id="noResults" style="display: none;">
+                        <p>No students found</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Footer Navigation -->
+        <footer class="sticky bottom-0 bg-white border-t border-gray-100 z-10">
+            <div class="flex justify-around px-4 py-2">
+                <a class="flex flex-col items-center justify-center gap-1 text-primary-600 flex-1 py-1 rounded-full bg-primary-100" href="/">
+                    <span class="icon icon-group"></span>
+                    <p class="text-xs font-bold">Students</p>
+                </a>
+                <a class="flex flex-col items-center justify-center gap-1 text-gray-500 hover-text-primary-600 flex-1 py-1 rounded-full hover-bg-primary-50 transition-colors" href="/gallery">
+                    <span class="icon icon-gallery"></span>
+                    <p class="text-xs font-medium">My Gallery</p>
+                </a>
+                <a class="flex flex-col items-center justify-center gap-1 text-gray-500 hover-text-primary-600 flex-1 py-1 rounded-full hover-bg-primary-50 transition-colors" href="/notifications">
+                    <span class="icon icon-notifications"></span>
+                    <p class="text-xs font-medium">Notifications</p>
+                </a>
+                <a class="flex flex-col items-center justify-center gap-1 text-gray-500 hover-text-primary-600 flex-1 py-1 rounded-full hover-bg-primary-50 transition-colors" href="/profile">
+                    <span class="icon icon-person"></span>
+                    <p class="text-xs font-medium">Profile</p>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            
+            if (query === '') {
+                // Show all students
+                location.reload();
+                return;
+            }
+
+            // Filter students in real-time
+            fetch(`/api/search?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    updateStudentList(data);
+                })
+                .catch(error => {
+                    console.error('Search error:', error);
+                });
+        });
+
+        function updateStudentList(groupedStudents) {
+            const studentList = document.getElementById('studentList');
+            const noResults = document.getElementById('noResults');
+            
+            if (Object.keys(groupedStudents).length === 0) {
+                studentList.innerHTML = '<div class="px-4 py-20 text-center text-gray-400" id="noResults"><p>No students found</p></div>';
+                return;
+            }
+
+            let html = '';
+
+            const colors = {
+                'A': 'primary', 'B': 'emerald', 'C': 'rose', 'D': 'fuchsia',
+                'E': 'sky', 'F': 'indigo', 'G': 'purple', 'H': 'pink',
+                'I': 'amber', 'J': 'lime', 'K': 'teal', 'L': 'cyan',
+                'M': 'orange', 'N': 'violet', 'O': 'slate', 'P': 'red',
+                'Q': 'yellow', 'R': 'green', 'S': 'blue', 'T': 'indigo',
+                'U': 'purple', 'V': 'pink', 'W': 'rose', 'X': 'emerald',
+                'Y': 'sky', 'Z': 'amber'
+            };
+
+            for (const [letter, students] of Object.entries(groupedStudents)) {
+                const color = colors[letter] || 'primary';
+                
+                html += `
+                    <div class="letter-header">
+                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider">${letter}</p>
+                    </div>
+                `;
+
+                students.forEach((student, index) => {
+                    const borderClass = index > 0 ? 'border-t border-gray-100' : '';
+                    html += `
+                        <a class="student-item ${borderClass}" href="/students/${student}">
+                            <div class="avatar bg-${color}-100 text-${color}-600">
+                                ${letter}
+                            </div>
+                            <p class="text-gray-800 text-base font-medium flex-1">${student}</p>
+                            <span class="icon icon-chevron text-gray-400"></span>
+                        </a>
+                    `;
+                });
+            }
+
+            studentList.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
